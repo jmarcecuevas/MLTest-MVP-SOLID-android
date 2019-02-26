@@ -5,10 +5,7 @@ import java.io.Serializable;
 public class MLError implements Serializable {
 
     private String title;
-
     private String message;
-
-    private Integer statusCode;
 
     public String getMessage() {
         return message;
@@ -36,13 +33,5 @@ public class MLError implements Serializable {
         MLError result = MLError.errorFromMessage(message);
         result.setTitle(title);
         return result;
-    }
-
-    public Integer getStatusCode() {
-        return statusCode;
-    }
-
-    public void setStatusCode(Integer statusCode) {
-        this.statusCode = statusCode;
     }
 }

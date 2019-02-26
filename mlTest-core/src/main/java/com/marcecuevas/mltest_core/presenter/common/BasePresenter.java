@@ -1,18 +1,7 @@
 package com.marcecuevas.mltest_core.presenter.common;
 
-public class BasePresenter<T>{
+public interface BasePresenter<T>{
 
-    private T view;
-
-    public BasePresenter(T view){
-        this.view = view;
-    }
-
-    public T getView() {
-        return view;
-    }
-
-    public void detachView(){
-        view = null;
-    }
+    void bind(T view);
+    void unbind();
 }

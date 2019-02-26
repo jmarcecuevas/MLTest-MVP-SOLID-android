@@ -1,7 +1,9 @@
 package com.marcecuevas.mltest_core.viewModel.common;
 
+import com.marcecuevas.mltest_core.model.MLError;
+
 public interface BaseView {
 
-    void showMessage(String message);
+    void showError(MLError error);
     void showOfflineMessage(boolean isCritical);
 }

@@ -1,8 +1,10 @@
 package com.marcecuevas.mltest_core.dao.common;
 
 import com.marcecuevas.mltest_core.model.MLError;
-import com.marcecuevas.mltest_core.util.MLResultListener;
+import com.marcecuevas.mltest_core.model.MLResultListener;
+
 import java.lang.annotation.Annotation;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
