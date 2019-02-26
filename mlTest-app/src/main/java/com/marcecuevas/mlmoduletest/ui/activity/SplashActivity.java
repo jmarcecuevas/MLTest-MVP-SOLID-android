@@ -10,7 +10,6 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void init() {
         addFragmentWithBackStack(SplashFragment.class,false);
-
     }
 
     @Override
