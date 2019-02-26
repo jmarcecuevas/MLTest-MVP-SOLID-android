@@ -41,7 +41,11 @@ public class BankPresenterImpl implements BankPresenter {
         dao.banks(new MLResultListener<List<BankDTO>>() {
             @Override
             public void success(List<BankDTO> result) {
-                view.showBanks(result);
+                if(result.isEmpty()){
+                    view.showEmptyState();
+                }else{
+                    view.showBanks(result);
+                }
             }
 
             @Override

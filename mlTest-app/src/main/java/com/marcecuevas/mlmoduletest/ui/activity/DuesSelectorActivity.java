@@ -1,8 +1,5 @@
 package com.marcecuevas.mlmoduletest.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
 import com.marcecuevas.mlmoduletest.R;
 import com.marcecuevas.mlmoduletest.main.MLApplication;
 import com.marcecuevas.mlmoduletest.ui.activity.common.ToolbarActivity;

@@ -8,4 +8,5 @@ import java.util.List;
 public interface BankView extends BaseView {
 
     void showBanks(List<BankDTO> items);
+    void showEmptyState();
 }

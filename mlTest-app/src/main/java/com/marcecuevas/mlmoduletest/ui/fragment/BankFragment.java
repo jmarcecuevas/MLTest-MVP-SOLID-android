@@ -2,9 +2,12 @@ package com.marcecuevas.mlmoduletest.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.marcecuevas.mlmoduletest.R;
 import com.marcecuevas.mlmoduletest.main.MLApplication;
 import com.marcecuevas.mlmoduletest.ui.activity.DuesSelectorActivity;
@@ -30,6 +33,15 @@ public class BankFragment extends BaseFragment implements BankView, BankAdapter.
 
     @BindView(R.id.banksRV)
     protected RecyclerView methodsRV;
+
+    @BindView(R.id.emptyLottieView)
+    protected LottieAnimationView emptyLottieView;
+
+    @BindView(R.id.lottieAnimation)
+    protected LottieAnimationView lottieAnimation;
+
+    @BindView(R.id.container)
+    protected ConstraintLayout container;
 
     private BankAdapter adapter;
     private SelectionModel selectionModel;
@@ -72,7 +84,14 @@ public class BankFragment extends BaseFragment implements BankView, BankAdapter.
 
     @Override
     public void showBanks(List<BankDTO> items) {
+        lottieAnimation.setVisibility(View.VISIBLE);
         adapter.update(items);
+    }
+
+    @Override
+    public void showEmptyState() {
+        container.setVisibility(View.GONE);
+        emptyLottieView.setVisibility(View.VISIBLE);
     }
 
     @Override
