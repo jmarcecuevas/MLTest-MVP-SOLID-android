@@ -26,8 +26,13 @@
         <activity
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.PaymentMethodActivity" />
-        <activity android:name=".ui.activity.BankActivity"></activity>
+        <activity android:name=".ui.activity.PaymentMethodActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.BankActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.DuesSelectorActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

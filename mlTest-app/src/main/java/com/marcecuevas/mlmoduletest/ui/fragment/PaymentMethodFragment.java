@@ -108,11 +108,6 @@ public class PaymentMethodFragment extends BaseFragment implements PaymentView, 
 
     @Override
     public void showError(MLError error) {
-
-    }
-
-    @Override
-    public void showOfflineMessage(boolean isCritical) {
-
+        showErrorMessage(error);
     }
 }

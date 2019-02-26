@@ -1,15 +1,22 @@
 package com.marcecuevas.mlmoduletest.ui.fragment.common;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import com.marcecuevas.mlmoduletest.R;
 import com.marcecuevas.mlmoduletest.main.MLApplication;
+import com.marcecuevas.mltest_core.model.MLError;
+
+import java.util.Objects;
 
 import butterknife.ButterKnife;
 
@@ -87,5 +94,19 @@ public abstract class BaseFragment extends Fragment {
         t.replace(R.id.fragment, myNewFragment, newFragment);
         t.commit();
         return myNewFragment;
+    }
+
+    protected void showErrorMessage(MLError error){
+        new AlertDialog.Builder(Objects.requireNonNull(getContext()))
+                .setTitle(error.getTitle())
+                .setMessage(error.getMessage())
+                .setCancelable(false)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create().show();
+
     }
 }

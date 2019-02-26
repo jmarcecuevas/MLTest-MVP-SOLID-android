@@ -1,1 +1,1 @@
-include ':mlTest-app', ':mlTest-core', ':mlTest-console'
+include ':mlTest-app', ':mlTest-core'

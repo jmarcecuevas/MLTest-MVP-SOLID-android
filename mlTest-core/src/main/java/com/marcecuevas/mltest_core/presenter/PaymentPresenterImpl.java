@@ -6,6 +6,7 @@ import com.marcecuevas.mltest_core.model.MLResultListener;
 import com.marcecuevas.mltest_core.model.dto.PaymentMethodDTO;
 import com.marcecuevas.mltest_core.viewModel.PaymentView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,11 +22,13 @@ public class PaymentPresenterImpl implements PaymentPresenter {
     public PaymentPresenterImpl(){
 
     }
+
     @Override
     public void paymentMethods() {
         dao.paymentMethods(new MLResultListener<List<PaymentMethodDTO>>() {
             @Override
             public void success(List<PaymentMethodDTO> result) {
+                result = filterCreditCards(result);
                 if(result.isEmpty()){
                     view.showEmptyState();
                 }else{
@@ -35,9 +38,21 @@ public class PaymentPresenterImpl implements PaymentPresenter {
 
             @Override
             public void error(MLError error) {
-
+                view.showError(MLError.errorFromMessageAndTitle
+                        ("Ha ocurrido un error","ERROR"));
             }
         });
+    }
+
+    @Override
+    public List<PaymentMethodDTO> filterCreditCards(List<PaymentMethodDTO> paymentMethods) {
+        List<PaymentMethodDTO> creditCards = new ArrayList<>();
+            for(PaymentMethodDTO item : paymentMethods){
+                if(item.isCreditCard()){
+                    creditCards.add(item);
+                }
+            }
+            return creditCards;
     }
 
     @Override

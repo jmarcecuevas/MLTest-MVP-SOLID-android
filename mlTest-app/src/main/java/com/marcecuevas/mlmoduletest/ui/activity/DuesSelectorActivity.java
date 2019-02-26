@@ -5,16 +5,14 @@ import android.os.Bundle;
 
 import com.marcecuevas.mlmoduletest.R;
 import com.marcecuevas.mlmoduletest.main.MLApplication;
-import com.marcecuevas.mlmoduletest.ui.activity.common.BaseActivity;
 import com.marcecuevas.mlmoduletest.ui.activity.common.ToolbarActivity;
-import com.marcecuevas.mlmoduletest.ui.fragment.BankFragment;
-import com.marcecuevas.mlmoduletest.ui.fragment.PaymentMethodFragment;
+import com.marcecuevas.mlmoduletest.ui.fragment.DuesSelectorFragment;
 
-public class BankActivity extends ToolbarActivity {
+public class DuesSelectorActivity extends ToolbarActivity {
 
     @Override
     protected int getLayout() {
-        return R.layout.activity_bank;
+        return R.layout.activity_dues_selector;
     }
 
     @Override
@@ -23,18 +21,18 @@ public class BankActivity extends ToolbarActivity {
     }
 
     @Override
+    protected void init() {
+        super.init();
+        addFragmentWithBackStack(DuesSelectorFragment.class, false);
+    }
+
+    @Override
     protected void injectDependencies(MLApplication application) {
 
     }
 
     @Override
-    protected void init() {
-        super.init();
-        addFragmentWithBackStack(BankFragment.class,false);
-    }
-
-    @Override
     protected String title() {
-        return getString(R.string.toolbar_bank);
+        return getString(R.string.toolbar_dues_amount);
     }
 }

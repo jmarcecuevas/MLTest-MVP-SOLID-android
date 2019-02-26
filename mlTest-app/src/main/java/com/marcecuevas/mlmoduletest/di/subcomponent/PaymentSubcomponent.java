@@ -1,5 +1,7 @@
 package com.marcecuevas.mlmoduletest.di.subcomponent;
 
+import com.marcecuevas.mlmoduletest.ui.fragment.BankFragment;
+import com.marcecuevas.mlmoduletest.ui.fragment.DuesSelectorFragment;
 import com.marcecuevas.mlmoduletest.ui.fragment.HomeFragment;
 import com.marcecuevas.mlmoduletest.ui.fragment.PaymentMethodFragment;
 import com.marcecuevas.mltest_core.di.module.HomeModule;
@@ -15,4 +17,6 @@ import dagger.Subcomponent;
 })
 public interface PaymentSubcomponent {
     void inject(PaymentMethodFragment fragment);
+    void inject(BankFragment fragment);
+    void inject(DuesSelectorFragment fragment);
 }

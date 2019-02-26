@@ -75,12 +75,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
     @Override
     public void showError(MLError error) {
-
-    }
-
-    @Override
-    public void showOfflineMessage(boolean isCritical) {
-
+        showErrorMessage(error);
     }
 
     @Override
