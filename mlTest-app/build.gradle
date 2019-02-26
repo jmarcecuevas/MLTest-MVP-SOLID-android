@@ -1,0 +1,149 @@
+apply plugin: 'com.android.application'
+apply plugin: 'jacoco-android'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        applicationId "com.marcecuevas.mlmoduletest"
+
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.compileSdkVersion
+
+        versionCode 2
+        versionName "1.0.1"
+
+        vectorDrawables.useSupportLibrary = true
+
+        dataBinding {
+            enabled = true
+        }
+
+        testInstrumentationRunner "com.marcecuevas.mlmoduletest.MLTestRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-debug'
+
+            // Run code coverage reports by default on debug builds.
+            testCoverageEnabled true
+        }
+    }
+
+    flavorDimensions "mode"
+
+    productFlavors {
+        prod {
+            dimension "mode"
+        }
+
+        mock {
+            dimension "mode"
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    /* allows robolectric to access Android resources */
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+    /* allow using java 8 lambda */
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+// Grant animation permissions to avoid test failure because of ui sync.
+task grantAnimationPermissions(type: Exec, dependsOn: 'installMock') {
+    group = 'test'
+    description = 'Grant permissions for testing.'
+
+    def absolutePath = file('..') // Get project absolute path
+    commandLine "$absolutePath/set_animation_permissions.sh com.mirhoseini.marvel".split(" ")
+}
+
+// Source: http://stackoverflow.com/q/29908110/112705
+afterEvaluate {
+    tasks.each { task ->
+        if (task.name.startsWith('assembleMockAndroidTest')) {
+            task.dependsOn grantAnimationPermissions
+        }
+    }
+}
+
+jacocoAndroidUnitTestReport {
+    // fix jacoco issue with ButterKnife
+    excludes += ['**/*$ViewBinder*.*']
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':mlTest-core')
+
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+
+    androidTestImplementation "org.mockito:mockito-core:$mockitoVersion"
+    androidTestImplementation "com.google.dexmaker:dexmaker:$dexmakerVersion"
+    androidTestImplementation "com.google.dexmaker:dexmaker-mockito:$dexmakerVersion"
+    androidTestImplementation "com.android.support:support-annotations:$androidSupportVersion"
+    androidTestImplementation "com.android.support.test:runner:$supportTestVesion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$espressoVersion"
+
+    implementation "com.android.support:appcompat-v7:$androidSupportVersion"
+    implementation "com.android.support:support-v4:$androidSupportVersion"
+    implementation "com.android.support:design:$androidSupportVersion"
+    implementation "com.android.support:support-vector-drawable:$androidSupportVersion"
+    implementation "com.android.support:recyclerview-v7:$androidSupportVersion"
+    implementation "com.android.support:cardview-v7:$androidSupportVersion"
+    implementation "com.android.support:palette-v7:$androidSupportVersion"
+
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroidVersion"
+    implementation "com.jakewharton.rxbinding2:rxbinding:$rxbindingVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
+
+    implementation "com.mirhoseini.utils:utils:$utilsVersion"
+
+    implementation "com.squareup.picasso:picasso:$picassoVersion"
+
+    implementation "com.jakewharton:butterknife:$butterknifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$retrofitAdapterVersion"
+
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    implementation "com.jakewharton.timber:timber:$timberVersion"
+
+    implementation "com.j256.ormlite:ormlite-android:$ormLiteVersion"
+
+    implementation "com.google.firebase:firebase-core:$firebaseVersion"
+    implementation "com.google.firebase:firebase-crash:$firebaseVersion"
+}
